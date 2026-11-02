@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📐 Exponential Functions - رياضيات 11 متقدم | Mr. Mohammed Hesham</title>
+<meta name="description" content="امتحان تفاعلي عن الدوال الأسية وتحليلها وتمثيلها بيانياً - رياضيات 11 متقدم">
+<meta name="author" content="Mr. Mohammed Hesham">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Inter:wght@400;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<style>
+body { font-family: 'Cairo', sans-serif; background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%); }
+body.en-mode { font-family: 'Inter', sans-serif; direction: ltr; }
+.arabic-math { font-family: 'Amiri', 'Cairo', serif; }
+.correct { background-color: #dcfce7 !important; border-color: #16a34a !important; }
+.incorrect { background-color: #fee2e2 !important; border-color: #dc2626 !important; }
+.timer-warning { color: #dc2626 !important; animation: pulse 1s infinite; }
+@keyframes pulse { 50% { opacity: 0.7; } }
+@media print { .no-print { display: none !important; } }
+.success-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-weight: bold; font-size: 0.875rem; }
+.grade-excellent { background: #dcfce7; color: #166534; }
+.grade-good { background: #fef3c7; color: #92400e; }
+.grade-pass { background: #dbeafe; color: #1e40af; }
+.grade-fail { background: #fee2e2; color: #991b1b; }
+.lang-switch { position: fixed; top: 16px; left: 16px; z-index: 100; background: white; padding: 6px; border-radius: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.15); display: flex; gap: 4px; border: 2px solid #16a34a; }
+body.en-mode .lang-switch { left: auto; right: 16px; }
+.lang-btn { padding: 6px 14px; border-radius: 20px; cursor: pointer; font-weight: bold; transition: all 0.3s; border: none; font-size: 0.875rem; background: transparent; color: #6b7280; }
+.lang-btn.active { background: #16a34a; color: white; box-shadow: 0 2px 6px rgba(22,163,74,0.4); }
+.shuffle-badge { display: inline-block; background: linear-gradient(135deg, #16a34a, #15803d); color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; margin-right: 8px; }
+body.en-mode .shuffle-badge { margin-right: 0; margin-left: 8px; }
+.math-display { display: inline-block; direction: ltr; font-family: 'Amiri', serif; font-size: 1.1em; padding: 2px 6px; background: #dcfce7; border-radius: 4px; margin: 2px; color: #166534; font-weight: 600; }
+.save-indicator { position: fixed; bottom: 20px; left: 20px; z-index: 200; background: #10b981; color: white; padding: 8px 16px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+body.en-mode .save-indicator { left: auto; right: 20px; }
+.save-indicator.show { opacity: 1; }
+.formula-box { background: #dcfce7; border: 2px solid #16a34a; border-radius: 8px; padding: 12px; margin: 10px 0; font-family: 'Amiri', serif; direction: ltr; text-align: center; }
+.svg-graph { display: block; margin: 12px auto; background: white; border: 2px solid #e5e7eb; border-radius: 12px; padding: 8px; max-width: 100%; }
+.graph-container { text-align: center; margin: 10px 0; }
+.module-badge { display: inline-block; padding: 4px 16px; border-radius: 20px; font-weight: bold; font-size: 0.85rem; margin-bottom: 8px; }
+.module-1 { background: #dcfce7; color: #166534; }
+.module-2 { background: #dbeafe; color: #1e40af; }
+.module-3 { background: #fce7f3; color: #9f1239; }
+.module-4 { background: #fef3c7; color: #92400e; }
+.module-5 { background: #ede9fe; color: #5b21b6; }
+.module-6 { background: #fee2e2; color: #991b1b; }
+</style>
+</head>
+<body class="p-4 md:p-8 min-h-screen">
+
+<div class="lang-switch no-print">
+<button class="lang-btn active" onclick="setLanguage('ar')" id="btn-ar">عربي</button>
+<button class="lang-btn" onclick="setLanguage('en')" id="btn-en">EN</button>
+</div>
+
+<div id="saveIndicator" class="save-indicator">💾 <span data-ar="تم الحفظ" data-en="Saved">تم الحفظ</span></div>
+
+<div id="timer-container" class="max-w-5xl mx-auto mb-4 text-center no-print">
+<div class="bg-white p-4 rounded-2xl shadow-lg inline-block border-2 border-green-100">
+<span class="text-gray-600 ml-2">⏰ <span data-ar="الوقت المتبقي:" data-en="Time Left:">الوقت المتبقي:</span></span>
+<span id="timer" class="text-2xl font-bold text-green-700 font-mono">75:00</span>
+<span class="shuffle-badge">📐 <span data-ar="الدوال الأسية" data-en="Exponential Functions">الدوال الأسية</span> - 30 <span data-ar="سؤال" data-en="Questions">سؤال</span></span>
+</div>
+</div>
+
+<div class="max-w-5xl mx-auto mb-6 flex flex-wrap gap-3 justify-center no-print">
+<button onclick="toggleAnswers()" class="bg-green-700 hover:bg-green-800 text-white px-5 py-2 rounded-xl font-medium transition shadow">👀 <span data-ar="إظهار/إخفاء الإجابات" data-en="Show/Hide Answers">إظهار/إخفاء الإجابات</span></button>
+<button onclick="window.print()" class="bg-gray-700 hover:bg-gray-900 text-white px-5 py-2 rounded-xl font-medium transition shadow">🖨️ <span data-ar="طباعة" data-en="Print">طباعة</span></button>
+<button onclick="reshuffleExam()" class="bg-gradient-to-r from-green-700 to-emerald-600 hover:from-green-800 hover:to-emerald-700 text-white px-5 py-2 rounded-xl font-medium transition shadow">🔄 <span data-ar="أسئلة جديدة" data-en="New Questions">أسئلة جديدة</span></button>
+<button onclick="clearProgress()" class="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-xl font-medium transition shadow">🗑️ <span data-ar="مسح التقدم" data-en="Clear Progress">مسح التقدم</span></button>
+</div>
+
+<header class="max-w-5xl mx-auto bg-white p-8 rounded-3xl shadow-2xl mb-8 border-4 border-green-500">
+<div class="text-center">
+<div class="inline-block bg-green-700 text-white px-6 py-2 rounded-full text-sm font-bold mb-4">MATH 11 ADVANCED - QUESTION 7</div>
+<h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">📐 <span data-ar="إيجاد قيم الدوال الأسية وتحليلها وتمثيلها بيانياً" data-en="Evaluating, Analyzing & Graphing Exponential Functions">إيجاد قيم الدوال الأسية وتحليلها وتمثيلها بيانياً</span></h1>
+<h2 class="text-xl text-green-700 font-semibold mb-2"><span data-ar="رياضيات 11 متقدم - مثال 3 وتمارين 3A-3C" data-en="Grade 11 Advanced - Example 3 & Exercises 3A-3C">رياضيات 11 متقدم - مثال 3 وتمارين 3A-3C</span></h2>
+<p class="text-gray-600 mb-4"><span data-ar="Natural Base Exponential Functions & Transformations" data-en="Natural Base Exponential Functions & Transformations">Natural Base Exponential Functions & Transformations</span></p>
+<p class="text-sm text-green-600 font-semibold">💾 <span data-ar="يتم حفظ تقدمك تلقائياً - 30 سؤالاً في 6 أقسام" data-en="Your progress is auto-saved - 30 questions in 6 sections">يتم حفظ تقدمك تلقائياً - 30 سؤالاً في 6 أقسام</span></p>
+</div>
+<div class="mt-6 flex flex-wrap justify-center gap-4 text-sm text-gray-600">
+<span>📅 <span data-ar="التاريخ:" data-en="Date:">التاريخ:</span> <input type="text" id="examDate" class="border-b-2 border-green-300 bg-transparent w-32 text-center"></span>
+<span>😊 <span data-ar="الاسم:" data-en="Name:">الاسم:</span> <input type="text" id="studentName" class="border-b-2 border-green-300 bg-transparent w-40 text-center" data-placeholder-ar="اكتب اسمك" data-placeholder-en="Your name" placeholder="اكتب اسمك"></span>
+<span>🏫 <span data-ar="الشعبة:" data-en="Class:">الشعبة:</span> <input type="text" id="studentClass" class="border-b-2 border-green-300 bg-transparent w-32 text-center" data-placeholder-ar="الشعبة" data-placeholder-en="Class" placeholder="الشعبة"></span>
+<span>⏰ <span data-ar="المدة: 75 دقيقة" data-en="Duration: 75 min">المدة: 75 دقيقة</span></span>
+<span>📊 <span data-ar="المجموع: 100 درجة" data-en="Total: 100 points">المجموع: 100 درجة</span></span>
+</div>
+</header>
+
+<div class="max-w-5xl mx-auto mb-6 bg-white p-4 rounded-xl shadow-lg border-2 border-green-200 no-print">
+<h3 class="font-bold text-lg mb-3 text-green-800 text-center">📐 <span data-ar="القوانين والخصائص الأساسية" data-en="Key Laws & Properties">القوانين والخصائص الأساسية</span></h3>
+<div class="grid md:grid-cols-3 gap-3 text-sm">
+<div class="formula-box">
+<strong><span data-ar="الدالة الأسية الطبيعية:" data-en="Natural Exponential:">الدالة الأسية الطبيعية:</span></strong><br>
+<span class="math-display">f(x) = eˣ</span><br>
+<span data-ar="e ≈ 2.71828" data-en="e ≈ 2.71828">e ≈ 2.71828</span>
+</div>
+<div class="formula-box">
+<strong><span data-ar="الخصائص الأساسية:" data-en="Basic Properties:">الخصائص الأساسية:</span></strong><br>
+<span data-ar="المجال: (-∞, +∞)" data-en="Domain: (-∞, +∞)">المجال: (-∞, +∞)</span><br>
+<span data-ar="المدى: (0, +∞)" data-en="Range: (0, +∞)">المدى: (0, +∞)</span><br>
+<span data-ar="HA: y = 0" data-en="HA: y = 0">HA: y = 0</span>
+</div>
+<div class="formula-box">
+<strong><span data-ar="التحويلات:" data-en="Transformations:">التحويلات:</span></strong><br>
+<span data-ar="a·e^(x-h) + k" data-en="a·e^(x-h) + k">a·e^(x-h) + k</span><br>
+<span data-ar="a: تمدد/انعكاس, h: إزاحة أفقية, k: إزاحة رأسية" data-en="a: stretch/reflect, h: horizontal shift, k: vertical shift">a: تمدد/انعكاس, h: إزاحة أفقية, k: إزاحة رأسية</span>
+</div>
+</div>
+</div>
+
+<main class="max-w-5xl mx-auto space-y-8" id="exam-content"></main>
+
+<div class="text-center no-print pb-8 mt-8">
+<button onclick="gradeExam()" class="bg-gradient-to-r from-green-700 to-emerald-600 hover:from-green-800 hover:to-emerald-700 text-white text-lg px-12 py-4 rounded-2xl font-bold shadow-xl transition transform hover:scale-105">🎯 <span data-ar="صحح إجاباتي!" data-en="Grade My Exam!">صحح إجاباتي!</span></button>
+</div>
+
+<div id="results-panel" class="max-w-5xl mx-auto mt-8 bg-white p-8 rounded-3xl shadow-2xl border-4 border-green-500 hidden no-print">
+<h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">🏆 <span data-ar="نتيجتك يا بطل!" data-en="Your Result, Champion!">نتيجتك يا بطل!</span> 🏆</h2>
+<div class="grid md:grid-cols-3 gap-4 mb-6">
+<div class="bg-green-50 p-4 rounded-xl text-center"><p>😊 <span data-ar="الاسم" data-en="Name">الاسم</span></p><p id="res-name" class="font-bold text-xl text-green-700">-</p></div>
+<div class="bg-emerald-50 p-4 rounded-xl text-center"><p>📅 <span data-ar="التاريخ" data-en="Date">التاريخ</span></p><p id="res-date" class="font-bold text-xl text-emerald-700">-</p></div>
+<div class="bg-green-50 p-4 rounded-xl text-center"><p>🌟 <span data-ar="المجموع" data-en="Total">المجموع</span></p><p id="res-total" class="font-bold text-3xl text-green-700">0 / 100</p></div>
+</div>
+<div class="text-center mb-6">
+<span id="success-badge" class="success-badge grade-excellent">-</span>
+<p id="success-percent" class="text-4xl font-bold text-green-700 mt-2">0%</p>
+<p class="text-sm text-gray-500"><span data-ar="نسبة النجاح" data-en="Success Rate">نسبة النجاح</span></p>
+</div>
+<div class="bg-gray-50 p-6 rounded-xl mb-6">
+<h3 class="font-bold text-lg mb-4 text-gray-800">📊 <span data-ar="أداؤك في كل قسم:" data-en="Your Performance by Section:">أداؤك في كل قسم:</span></h3>
+<div class="space-y-3" id="sections-performance"></div>
+</div>
+<div class="text-center">
+<button id="sendEmailBtn" onclick="sendResultsToEmail()" class="bg-gradient-to-r from-green-700 to-emerald-600 text-white text-lg px-8 py-3 rounded-2xl font-bold shadow-xl transition">📧 <span data-ar="أرسل النتيجة للمعلم" data-en="Send Result to Teacher">أرسل النتيجة للمعلم</span></button>
+<p id="emailStatus" class="text-sm mt-2 text-center font-medium"></p>
+</div>
+</div>
+
+<footer class="max-w-5xl mx-auto mt-10 mb-8 text-center text-gray-500 text-sm no-print">
+© Exponential Functions - Grade 11 Advanced | Mr. Mohammed Hesham 📐
+</footer>
+
+<script>
+const PUBLIC_KEY = "Rb3Lq8tXaFmc5YHUH";
+const SERVICE_ID = "service_w15m64i";
+const TEMPLATE_ID = "template_5b0u2tq";
+const TARGET_EMAIL = "mohammedhesham872@gmail.com";
+emailjs.init(PUBLIC_KEY);
+
+const STORAGE_KEY = 'exponential_functions_grade11_v1';
+const TOTAL_TIME = 4500;
+const TOTAL_QUESTIONS = 30;
+const TOTAL_SECTIONS = 6;
+const QUESTIONS_PER_SECTION = 5;
+
+let currentSeed = null;
+let answersVisible = false;
+let saveIndicatorTimeout = null;
+let currentLang = 'ar';
+let timeRemaining = TOTAL_TIME;
+let timerInterval;
+let examData;
+let correctAnswersMap = {};
+let rng = null;
+
+function mulberry32(a) {
+    return function() {
+        var t = a += 0x6D2B79F5;
+        t = Math.imul(t ^ t >>> 15, t | 1);
+        t ^= t + Math.imul(t ^ t >>> 7, t | 61);
+        return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    }
+}
+
+function showSaveIndicator() {
+    const indicator = document.getElementById('saveIndicator');
+    indicator.classList.add('show');
+    if (saveIndicatorTimeout) clearTimeout(saveIndicatorTimeout);
+    saveIndicatorTimeout = setTimeout(() => indicator.classList.remove('show'), 1500);
+}
+
+function saveState(showIndicator = true) {
+    try {
+        const state = {
+            seed: currentSeed, lang: currentLang,
+            studentName: document.getElementById('studentName').value,
+            studentClass: document.getElementById('studentClass').value,
+            examDate: document.getElementById('examDate').value,
+            answers: getSelectedAnswers(),
+            timeRemaining: timeRemaining,
+            answersVisible: answersVisible, savedAt: Date.now()
+        };
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        if (showIndicator) showSaveIndicator();
+    } catch (e) { console.error('Save error:', e); }
+}
+
+function loadState() {
+    try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        return saved ? JSON.parse(saved) : null;
+    } catch (e) { return null; }
+}
+
+function getSelectedAnswers() {
+    const answers = {};
+    for (let i = 0; i < TOTAL_QUESTIONS; i++) {
+        const selected = document.querySelector('input[name="q'+i+'"]:checked');
+        if (selected) answers[i] = selected.value;
+    }
+    return answers;
+}
+
+function restoreAnswers(answers) {
+    if (!answers) return;
+    for (const [idx, val] of Object.entries(answers)) {
+        const radio = document.querySelector('input[name="q'+idx+'"][value="'+val+'"]');
+        if (radio) radio.checked = true;
+    }
+}
+
+function clearProgress() {
+    const msg = currentLang === 'ar' ? '⚠️ هل أنت متأكد من مسح كل التقدم؟' : '⚠️ Clear all progress?';
+    if (confirm(msg)) { localStorage.removeItem(STORAGE_KEY); location.reload(); }
+}
+
+function setupAnswerListeners() {
+    document.getElementById('exam-content').addEventListener('change', (e) => {
+        if (e.target.type === 'radio') saveState();
+    });
+}
+
+function setupInputListeners() {
+    ['studentName', 'studentClass', 'examDate'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+            el.addEventListener('input', () => saveState(false));
+            el.addEventListener('blur', () => saveState());
+        }
+    });
+}
+
+// ==================== SVG DIAGRAMS - ACCURATE EXPONENTIAL GRAPHS ====================
+const svgGraphs = {
+    basic_ex: `<svg class="svg-graph" width="450" height="320" viewBox="0 0 450 320" xmlns="http://www.w3.org/2000/svg">
+        <rect x="5" y="5" width="440" height="310" rx="12" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+        <text x="225" y="25" text-anchor="middle" font-size="14" fill="#166534" font-weight="bold">f(x) = eˣ - الدالة الأسية الطبيعية</text>
+        <!-- Grid -->
+        <g stroke="#e5e7eb" stroke-width="0.5">
+            ${Array.from({length: 19}, (_, i) => `<line x1="${50 + i*20}" y1="40" x2="${50 + i*20}" y2="280"/>`).join('')}
+            ${Array.from({length: 13}, (_, i) => `<line x1="50" y1="${40 + i*20}" x2="410" y2="${40 + i*20}"/>`).join('')}
+        </g>
+        <!-- Axes -->
+        <line x1="50" y1="240" x2="420" y2="240" stroke="#374151" stroke-width="2" marker-end="url(#arrowEx)"/>
+        <line x1="150" y1="40" x2="150" y2="280" stroke="#374151" stroke-width="2" marker-end="url(#arrowEx)"/>
+        <text x="425" y="245" font-size="12" fill="#374151" font-weight="bold">x</text>
+        <text x="140" y="35" font-size="12" fill="#374151" font-weight="bold">y</text>
+        <text x="155" y="255" font-size="10" fill="#374151">O</text>
+        <!-- Scale -->
+        <text x="190" y="255" font-size="9" fill="#6b7280">1</text>
+        <text x="230" y="255" font-size="9" fill="#6b7280">2</text>
+        <text x="270" y="255" font-size="9" fill="#6b7280">3</text>
+        <text x="310" y="255" font-size="9" fill="#6b7280">4</text>
+        <text x="110" y="255" font-size="9" fill="#6b7280">-1</text>
+        <text x="70" y="255" font-size="9" fill="#6b7280">-2</text>
+        <text x="140" y="220" font-size="9" fill="#6b7280">1</text>
+        <text x="140" y="180" font-size="9" fill="#6b7280">2</text>
+        <text x="140" y="140" font-size="9" fill="#6b7280">3</text>
+        <text x="140" y="100" font-size="9" fill="#6b7280">4</text>
+        <text x="140" y="260" font-size="9" fill="#6b7280">-1</text>
+        <!-- Horizontal asymptote y=0 -->
+        <line x1="50" y1="240" x2="420" y2="240" stroke="#dc2626" stroke-width="1" stroke-dasharray="4"/>
+        <text x="380" y="235" font-size="9" fill="#dc2626" font-weight="bold">HA: y=0</text>
+        <!-- e^x curve -->
+        <!-- Points: (-2, 0.135), (-1, 0.368), (0, 1), (1, 2.718), (2, 7.389), (3, 20.09) -->
+        <path d="M 70 238 Q 110 235 130 230 Q 145 220 150 220 Q 170 200 190 175 Q 210 145 230 105 Q 250 65 270 45" fill="none" stroke="#16a34a" stroke-width="3"/>
+        <text x="275" y="55" font-size="11" fill="#16a34a" font-weight="bold">y = eˣ</text>
+        <!-- Key points -->
+        <circle cx="150" cy="220" r="4" fill="#dc2626"/>
+        <text x="155" y="215" font-size="9" fill="#dc2626" font-weight="bold">(0, 1)</text>
+        <circle cx="190" cy="175" r="4" fill="#16a34a"/>
+        <text x="195" y="170" font-size="9" fill="#16a34a">(1, e≈2.72)</text>
+        <text x="225" y="300" text-anchor="middle" font-size="11" fill="#166534">Domain: ℝ, Range: (0, +∞), Increasing, HA: y=0</text>
+        <defs><marker id="arrowEx" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#374151"/></marker></defs>
+    </svg>`,
+    
+    ex3A_reflected: `<svg class="svg-graph" width="450" height="320" viewBox="0 0 450 320" xmlns="http://www.w3.org/2000/svg">
+        <rect x="5" y="5" width="440" height="310" rx="12" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+        <text x="225" y="25" text-anchor="middle" font-size="14" fill="#1e40af" font-weight="bold">3A. q(x) = e^(-x) - انعكاس حول المحور y</text>
+        <!-- Grid -->
+        <g stroke="#e5e7eb" stroke-width="0.5">
+            ${Array.from({length: 19}, (_, i) => `<line x1="${50 + i*20}" y1="40" x2="${50 + i*20}" y2="280"/>`).join('')}
+            ${Array.from({length: 13}, (_, i) => `<line x1="50" y1="${40 + i*20}" x2="410" y2="${40 + i*20}"/>`).join('')}
+        </g>
+        <!-- Axes -->
+        <line x1="50" y1="240" x2="420" y2="240" stroke="#374151" stroke-width="2" marker-end="url(#arrow3A)"/>
+        <line x1="150" y1="40" x2="150" y2="280" stroke="#374151" stroke-width="2" marker-end="url(#arrow3A)"/>
+        <text x="425" y="245" font-size="12" fill="#374151" font-weight="bold">x</text>
+        <text x="140" y="35" font-size="12" fill="#374151" font-weight="bold">y</text>
+        <text x="155" y="255" font-size="10" fill="#374151">O</text>
+        <!-- HA y=0 -->
+        <line x1="50" y1="240" x2="420" y2="240" stroke="#dc2626" stroke-width="1" stroke-dasharray="4"/>
+        <text x="380" y="235" font-size="9" fill="#dc2626" font-weight="bold">HA: y=0</text>
+        <!-- e^(-x) curve: decreasing, passes through (0,1) -->
+        <!-- Points: (-3, 20.09), (-2, 7.389), (-1, 2.718), (0, 1), (1, 0.368), (2, 0.135) -->
+        <path d="M 70 45 Q 90 65 110 105 Q 130 145 145 175 Q 150 200 150 220 Q 170 230 190 235 Q 230 238 270 239 Q 320 240 380 240" fill="none" stroke="#2563eb" stroke-width="3"/>
+        <text x="80" y="60" font-size="11" fill="#2563eb" font-weight="bold">q(x) = e^(-x)</text>
+        <!-- Key point (0,1) -->
+        <circle cx="150" cy="220" r="4" fill="#dc2626"/>
+        <text x="155" y="215" font-size="9" fill="#dc2626" font-weight="bold">(0, 1)</text>
+        <!-- Reflection indicator -->
+        <text x="225" y="295" text-anchor="middle" font-size="10" fill="#1e40af">Reflection of eˣ across y-axis</text>
+        <text x="225" y="310" text-anchor="middle" font-size="10" fill="#1e40af">Decreasing function, Domain: ℝ, Range: (0, +∞)</text>
+        <defs><marker id="arrow3A" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#374151"/></marker></defs>
+    </svg>`,
+    
+    ex3B_shifted: `<svg class="svg-graph" width="450" height="320" viewBox="0 0 450 320" xmlns="http://www.w3.org/2000/svg">
+        <rect x="5" y="5" width="440" height="310" rx="12" fill="#fce7f3" stroke="#ec4899" stroke-width="2"/>
+        <text x="225" y="25" text-anchor="middle" font-size="14" fill="#9f1239" font-weight="bold">3B. r(x) = eˣ - 5 - إزاحة رأسية لأسفل 5 وحدات</text>
+        <!-- Grid -->
+        <g stroke="#e5e7eb" stroke-width="0.5">
+            ${Array.from({length: 19}, (_, i) => `<line x1="${50 + i*20}" y1="40" x2="${50 + i*20}" y2="280"/>`).join('')}
+            ${Array.from({length: 13}, (_, i) => `<line x1="50" y1="${40 + i*20}" x2="410" y2="${40 + i*20}"/>`).join('')}
+        </g>
+        <!-- Axes -->
+        <line x1="50" y1="240" x2="420" y2="240" stroke="#374151" stroke-width="2" marker-end="url(#arrow3B)"/>
+        <line x1="150" y1="40" x2="150" y2="280" stroke="#374151" stroke-width="2" marker-end="url(#arrow3B)"/>
+        <text x="425" y="245" font-size="12" fill="#374151" font-weight="bold">x</text>
+        <text x="140" y="35" font-size="12" fill="#374151" font-weight="bold">y</text>
+        <text x="155" y="255" font-size="10" fill="#374151">O</text>
+        <!-- HA y=-5 (at y=240+100=340, but we show it at bottom) -->
+        <line x1="50" y1="340" x2="420" y2="340" stroke="#dc2626" stroke-width="1" stroke-dasharray="4" opacity="0.5"/>
+        <!-- Shifted curve: e^x - 5 -->
+        <!-- At x=0: 1-5=-4, at x=1: 2.718-5=-2.28, at x=2: 7.389-5=2.389 -->
+        <path d="M 70 275 Q 110 270 130 268 Q 145 265 150 260 Q 170 250 190 235 Q 210 215 230 190 Q 250 160 270 125 Q 290 90 310 60" fill="none" stroke="#ec4899" stroke-width="3"/>
+        <text x="315" y="55" font-size="11" fill="#ec4899" font-weight="bold">r(x) = eˣ - 5</text>
+        <!-- Key point (0, -4) -->
+        <circle cx="150" cy="260" r="4" fill="#dc2626"/>
+        <text x="155" y="275" font-size="9" fill="#dc2626" font-weight="bold">(0, -4)</text>
+        <!-- x-intercept where e^x = 5, x = ln(5) ≈ 1.609 -->
+        <circle cx="182" cy="240" r="4" fill="#16a34a"/>
+        <text x="185" y="230" font-size="9" fill="#16a34a" font-weight="bold">(ln5, 0)≈(1.61, 0)</text>
+        <!-- HA indicator -->
+        <text x="380" y="275" font-size="9" fill="#dc2626" font-weight="bold">HA: y=-5</text>
+        <text x="225" y="300" text-anchor="middle" font-size="10" fill="#9f1239">Vertical shift down 5 units, Range: (-5, +∞)</text>
+        <defs><marker id="arrow3B" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#374151"/></marker></defs>
+    </svg>`,
+    
+    ex3C_stretched: `<svg class="svg-graph" width="450" height="320" viewBox="0 0 450 320" xmlns="http://www.w3.org/2000/svg">
+        <rect x="5" y="5" width="440" height="310" rx="12" fill="#ecfdf5" stroke="#10b981" stroke-width="2"/>
+        <text x="225" y="25" text-anchor="middle" font-size="14" fill="#065f46" font-weight="bold">3C. t(x) = 3eˣ - تمدد رأسي بمعامل 3</text>
+        <!-- Grid -->
+        <g stroke="#e5e7eb" stroke-width="0.5">
+            ${Array.from({length: 19}, (_, i) => `<line x1="${50 + i*20}" y1="40" x2="${50 + i*20}" y2="280"/>`).join('')}
+            ${Array.from({length: 13}, (_, i) => `<line x1="50" y1="${40 + i*20}" x2="410" y2="${40 + i*20}"/>`).join('')}
+        </g>
+        <!-- Axes -->
+        <line x1="50" y1="240" x2="420" y2="240" stroke="#374151" stroke-width="2" marker-end="url(#arrow3C)"/>
+        <line x1="150" y1="40" x2="150" y2="280" stroke="#374151" stroke-width="2" marker-end="url(#arrow3C)"/>
+        <text x="425" y="245" font-size="12" fill="#374151" font-weight="bold">x</text>
+        <text x="140" y="35" font-size="12" fill="#374151" font-weight="bold">y</text>
+        <text x="155" y="255" font-size="10" fill="#374151">O</text>
+        <!-- HA y=0 -->
+        <line x1="50" y1="240" x2="420" y2="240" stroke="#dc2626" stroke-width="1" stroke-dasharray="4"/>
+        <text x="380" y="235" font-size="9" fill="#dc2626" font-weight="bold">HA: y=0</text>
+        <!-- 3e^x curve: steeper than e^x -->
+        <!-- At x=0: 3, at x=1: 3e≈8.15, at x=-1: 3/e≈1.1 -->
+        <path d="M 70 238 Q 110 235 130 232 Q 145 228 150 220 Q 170 195 190 160 Q 210 115 230 70 Q 250 45 270 40" fill="none" stroke="#10b981" stroke-width="3"/>
+        <text x="275" y="55" font-size="11" fill="#10b981" font-weight="bold">t(x) = 3eˣ</text>
+        <!-- Reference e^x curve (lighter) -->
+        <path d="M 70 238 Q 110 235 130 230 Q 145 220 150 220 Q 170 200 190 175 Q 210 145 230 105 Q 250 65 270 45" fill="none" stroke="#9ca3af" stroke-width="1.5" stroke-dasharray="3"/>
+        <text x="280" y="75" font-size="9" fill="#9ca3af">y = eˣ (reference)</text>
+        <!-- Key point (0, 3) -->
+        <circle cx="150" cy="220" r="4" fill="#dc2626"/>
+        <text x="155" y="215" font-size="9" fill="#dc2626" font-weight="bold">(0, 3)</text>
+        <text x="225" y="300" text-anchor="middle" font-size="10" fill="#065f46">Vertical stretch by factor 3, Range: (0, +∞), y-intercept: (0, 3)</text>
+        <defs><marker id="arrow3C" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#374151"/></marker></defs>
+    </svg>`,
+    
+    transformations_summary: `<svg class="svg-graph" width="450" height="340" viewBox="0 0 450 340" xmlns="http://www.w3.org/2000/svg">
+        <rect x="5" y="5" width="440" height="330" rx="12" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+        <text x="225" y="25" text-anchor="middle" font-size="14" fill="#92400e" font-weight="bold">🔄 تحويلات الدوال الأسية</text>
+        <!-- Base function -->
+        <rect x="20" y="45" width="400" height="40" rx="6" fill="#fde68a" stroke="#f59e0b" stroke-width="2"/>
+        <text x="220" y="70" text-anchor="middle" font-size="12" fill="#92400e" font-weight="bold">Base: f(x) = eˣ</text>
+        <!-- Transformations -->
+        <rect x="20" y="95" width="400" height="40" rx="6" fill="#fde68a" stroke="#f59e0b" stroke-width="2"/>
+        <text x="220" y="115" text-anchor="middle" font-size="11" fill="#92400e">f(x) = e^(-x): Reflection across y-axis (انعكاس حول المحور y)</text>
+        <rect x="20" y="145" width="400" height="40" rx="6" fill="#fde68a" stroke="#f59e0b" stroke-width="2"/>
+        <text x="220" y="165" text-anchor="middle" font-size="11" fill="#92400e">f(x) = eˣ + k: Vertical shift by k units (إزاحة رأسية)</text>
+        <rect x="20" y="195" width="400" height="40" rx="6" fill="#fde68a" stroke="#f59e0b" stroke-width="2"/>
+        <text x="220" y="215" text-anchor="middle" font-size="11" fill="#92400e">f(x) = e^(x-h): Horizontal shift by h units (إزاحة أفقية)</text>
+        <rect x="20" y="245" width="400" height="40" rx="6" fill="#fde68a" stroke="#f59e0b" stroke-width="2"/>
+        <text x="220" y="265" text-anchor="middle" font-size="11" fill="#92400e">f(x) = a·eˣ: Vertical stretch/compression by |a| (تمدد/انكماش)</text>
+        <rect x="20" y="295" width="400" height="35" rx="6" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+        <text x="220" y="317" text-anchor="middle" font-size="10" fill="#92400e">If a &lt; 0: also reflection across x-axis (انعكاس حول المحور x)</text>
+    </svg>`,
+    
+    comparison_graphs: `<svg class="svg-graph" width="450" height="340" viewBox="0 0 450 340" xmlns="http://www.w3.org/2000/svg">
+        <rect x="5" y="5" width="440" height="330" rx="12" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+        <text x="225" y="25" text-anchor="middle" font-size="14" fill="#5b21b6" font-weight="bold">📊 مقارنة الدوال الأسية</text>
+        <!-- Axes -->
+        <line x1="50" y1="240" x2="420" y2="240" stroke="#374151" stroke-width="2" marker-end="url(#arrowComp)"/>
+        <line x1="150" y1="40" x2="150" y2="280" stroke="#374151" stroke-width="2" marker-end="url(#arrowComp)"/>
+        <text x="425" y="245" font-size="12" fill="#374151" font-weight="bold">x</text>
+        <text x="140" y="35" font-size="12" fill="#374151" font-weight="bold">y</text>
+        <!-- e^x in blue -->
+        <path d="M 70 238 Q 110 235 130 230 Q 145 220 150 220 Q 170 200 190 175 Q 210 145 230 105 Q 250 65 270 45" fill="none" stroke="#2563eb" stroke-width="2.5"/>
+        <text x="275" y="55" font-size="10" fill="#2563eb" font-weight="bold">y = eˣ</text>
+        <!-- e^(-x) in red (reflected) -->
+        <path d="M 70 45 Q 90 65 110 105 Q 130 145 145 175 Q 150 200 150 220 Q 170 230 190 235 Q 230 238 270 239 Q 320 240 380 240" fill="none" stroke="#dc2626" stroke-width="2.5"/>
+        <text x="320" y="235" font-size="10" fill="#dc2626" font-weight="bold">y = e^(-x)</text>
+        <!-- 3e^x in green (stretched) -->
+        <path d="M 70 238 Q 110 235 130 232 Q 145 228 150 220 Q 170 195 190 160 Q 210 115 230 70 Q 250 45 270 40" fill="none" stroke="#16a34a" stroke-width="2.5"/>
+        <text x="275" y="75" font-size="10" fill="#16a34a" font-weight="bold">y = 3eˣ</text>
+        <!-- e^x - 5 in orange (shifted down) -->
+        <path d="M 70 275 Q 110 270 130 268 Q 145 265 150 260 Q 170 250 190 235 Q 210 215 230 190 Q 250 160 270 125 Q 290 90 310 60" fill="none" stroke="#f59e0b" stroke-width="2.5"/>
+        <text x="315" y="55" font-size="10" fill="#f59e0b" font-weight="bold">y = eˣ - 5</text>
+        <!-- Legend -->
+        <rect x="20" y="290" width="400" height="40" rx="6" fill="#fef3c7" stroke="#f59e0b" stroke-width="1"/>
+        <text x="220" y="305" text-anchor="middle" font-size="9" fill="#92400e">Blue: eˣ | Red: e^(-x) [reflected] | Green: 3eˣ [stretched] | Orange: eˣ-5 [shifted]</text>
+        <text x="220" y="322" text-anchor="middle" font-size="9" fill="#92400e">All have HA: y=0 (except orange: y=-5), Domain: ℝ, Range depends on transformation</text>
+        <defs><marker id="arrowComp" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#374151"/></marker></defs>
+    </svg>`,
+    
+    value_table: `<svg class="svg-graph" width="450" height="280" viewBox="0 0 450 280" xmlns="http://www.w3.org/2000/svg">
+        <rect x="5" y="5" width="440" height="270" rx="12" fill="#fce7f3" stroke="#ec4899" stroke-width="2"/>
+        <text x="225" y="25" text-anchor="middle" font-size="14" fill="#9f1239" font-weight="bold">📋 جدول قيم eˣ - Table of Values</text>
+        <!-- Table header -->
+        <rect x="20" y="45" width="400" height="30" fill="#fbcfe8" stroke="#ec4899" stroke-width="2"/>
+        <text x="100" y="65" text-anchor="middle" font-size="11" fill="#9f1239" font-weight="bold">x</text>
+        <text x="220" y="65" text-anchor="middle" font-size="11" fill="#9f1239" font-weight="bold">eˣ</text>
+        <text x="340" y="65" text-anchor="middle" font-size="11" fill="#9f1239" font-weight="bold">Approximate</text>
+        <!-- Rows -->
+        <rect x="20" y="75" width="400" height="25" fill="#fce7f3" stroke="#ec4899" stroke-width="1"/>
+        <text x="100" y="92" text-anchor="middle" font-size="10" fill="#9f1239">-2</text>
+        <text x="220" y="92" text-anchor="middle" font-size="10" fill="#9f1239">e⁻²</text>
+        <text x="340" y="92" text-anchor="middle" font-size="10" fill="#9f1239">≈ 0.135</text>
+        <rect x="20" y="100" width="400" height="25" fill="#fce7f3" stroke="#ec4899" stroke-width="1"/>
+        <text x="100" y="117" text-anchor="middle" font-size="10" fill="#9f1239">-1</text>
+        <text x="220" y="117" text-anchor="middle" font-size="10" fill="#9f1239">e⁻¹ = 1/e</text>
+        <text x="340" y="117" text-anchor="middle" font-size="10" fill="#9f1239">≈ 0.368</text>
+        <rect x="20" y="125" width="400" height="25" fill="#fce7f3" stroke="#ec4899" stroke-width="1"/>
+        <text x="100" y="142" text-anchor="middle" font-size="10" fill="#9f1239">0</text>
+        <text x="220" y="142" text-anchor="middle" font-size="10" fill="#9f1239">e⁰ = 1</text>
+        <text x="340" y="142" text-anchor="middle" font-size="10" fill="#9f1239">= 1</text>
+        <rect x="20" y="150" width="400" height="25" fill="#fce7f3" stroke="#ec4899" stroke-width="1"/>
+        <text x="100" y="167" text-anchor="middle" font-size="10" fill="#9f1239">1</text>
+        <text x="220" y="167" text-anchor="middle" font-size="10" fill="#9f1239">e¹ = e</text>
+        <text x="340" y="167" text-anchor="middle" font-size="10" fill="#9f1239">≈ 2.718</text>
+        <rect x="20" y="175" width="400" height="25" fill="#fce7f3" stroke="#ec4899" stroke-width="1"/>
+        <text x="100" y="192" text-anchor="middle" font-size="10" fill="#9f1239">2</text>
+        <text x="220" y="192" text-anchor="middle" font-size="10" fill="#9f1239">e²</text>
+        <text x="340" y="192" text-anchor="middle" font-size="10" fill="#9f1239">≈ 7.389</text>
+        <rect x="20" y="200" width="400" height="25" fill="#fce7f3" stroke="#ec4899" stroke-width="1"/>
+        <text x="100" y="217" text-anchor="middle" font-size="10" fill="#9f1239">3</text>
+        <text x="220" y="217" text-anchor="middle" font-size="10" fill="#9f1239">e³</text>
+        <text x="340" y="217" text-anchor="middle" font-size="10" fill="#9f1239">≈ 20.086</text>
+        <rect x="20" y="235" width="400" height="30" rx="6" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+        <text x="220" y="255" text-anchor="middle" font-size="11" fill="#92400e" font-weight="bold">Key: e⁰ = 1, e¹ ≈ 2.718, eˣ &gt; 0 for all x</text>
+    </svg>`
+};
+
+// ==================== EXAM DATA - 30 QUESTIONS ====================
+const originalExamData = {
+    sections: [
+        {
+            id: 'sec1',
+            title: { ar: '🔹 القسم 1: حساب قيم الدوال الأسية (Q1-Q5)', en: '🔹 Section 1: Evaluating Exponential Functions (Q1-Q5)' },
+            questions: [
+                {
+                    q: { ar: '<strong>س1:</strong> ما قيمة e⁰؟', en: '<strong>Q1:</strong> What is the value of e⁰?' },
+                    svg: svgGraphs.value_table,
+                    options: [
+                        { ar: '<span class="math-display">1</span>', en: '<span class="math-display">1</span>' },
+                        { ar: '<span class="math-display">0</span>', en: '<span class="math-display">0</span>' },
+                        { ar: '<span class="math-display">e</span>', en: '<span class="math-display">e</span>' },
+                        { ar: '<span class="math-display">غير معرّفة</span>', en: '<span class="math-display">Undefined</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'e⁰ = 1 (أي عدد غير صفر مرفوع للأس 0 يساوي 1)', en: 'e⁰ = 1 (any nonzero number to power 0 equals 1)' }
+                },
+                {
+                    q: { ar: '<strong>س2:</strong> ما قيمة e¹ تقريباً؟', en: '<strong>Q2:</strong> What is the approximate value of e¹?' },
+                    options: [
+                        { ar: '<span class="math-display">2.718</span>', en: '<span class="math-display">2.718</span>' },
+                        { ar: '<span class="math-display">3.14</span>', en: '<span class="math-display">3.14</span>' },
+                        { ar: '<span class="math-display">1.414</span>', en: '<span class="math-display">1.414</span>' },
+                        { ar: '<span class="math-display">2.000</span>', en: '<span class="math-display">2.000</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'e ≈ 2.71828 (العدد النيبيري/أويلر)', en: 'e ≈ 2.71828 (Euler\'s number)' }
+                },
+                {
+                    q: { ar: '<strong>س3:</strong> q(x) = e^(-x). ما قيمة q(0)؟', en: '<strong>Q3:</strong> q(x) = e^(-x). What is q(0)?' },
+                    svg: svgGraphs.ex3A_reflected,
+                    options: [
+                        { ar: '<span class="math-display">1</span>', en: '<span class="math-display">1</span>' },
+                        { ar: '<span class="math-display">0</span>', en: '<span class="math-display">0</span>' },
+                        { ar: '<span class="math-display">-1</span>', en: '<span class="math-display">-1</span>' },
+                        { ar: '<span class="math-display">e</span>', en: '<span class="math-display">e</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'q(0) = e^(-0) = e⁰ = 1', en: 'q(0) = e^(-0) = e⁰ = 1' }
+                },
+                {
+                    q: { ar: '<strong>س4:</strong> q(x) = e^(-x). ما قيمة q(1)؟', en: '<strong>Q4:</strong> q(x) = e^(-x). What is q(1)?' },
+                    options: [
+                        { ar: '<span class="math-display">1/e ≈ 0.368</span>', en: '<span class="math-display">1/e ≈ 0.368</span>' },
+                        { ar: '<span class="math-display">e ≈ 2.718</span>', en: '<span class="math-display">e ≈ 2.718</span>' },
+                        { ar: '<span class="math-display">-e</span>', en: '<span class="math-display">-e</span>' },
+                        { ar: '<span class="math-display">0</span>', en: '<span class="math-display">0</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'q(1) = e^(-1) = 1/e ≈ 0.368', en: 'q(1) = e^(-1) = 1/e ≈ 0.368' }
+                },
+                {
+                    q: { ar: '<strong>س5:</strong> r(x) = eˣ - 5. ما قيمة r(0)؟', en: '<strong>Q5:</strong> r(x) = eˣ - 5. What is r(0)?' },
+                    svg: svgGraphs.ex3B_shifted,
+                    options: [
+                        { ar: '<span class="math-display">-4</span>', en: '<span class="math-display">-4</span>' },
+                        { ar: '<span class="math-display">-5</span>', en: '<span class="math-display">-5</span>' },
+                        { ar: '<span class="math-display">1</span>', en: '<span class="math-display">1</span>' },
+                        { ar: '<span class="math-display">0</span>', en: '<span class="math-display">0</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'r(0) = e⁰ - 5 = 1 - 5 = -4', en: 'r(0) = e⁰ - 5 = 1 - 5 = -4' }
+                }
+            ]
+        },
+        {
+            id: 'sec2',
+            title: { ar: '🔹 القسم 2: تمرين 3C - t(x) = 3eˣ (Q6-Q10)', en: '🔹 Section 2: Exercise 3C - t(x) = 3eˣ (Q6-Q10)' },
+            questions: [
+                {
+                    q: { ar: '<strong>تمرين 3C:</strong> t(x) = 3eˣ. ما قيمة t(0)؟', en: '<strong>Exercise 3C:</strong> t(x) = 3eˣ. What is t(0)?' },
+                    svg: svgGraphs.ex3C_stretched,
+                    options: [
+                        { ar: '<span class="math-display">3</span>', en: '<span class="math-display">3</span>' },
+                        { ar: '<span class="math-display">1</span>', en: '<span class="math-display">1</span>' },
+                        { ar: '<span class="math-display">0</span>', en: '<span class="math-display">0</span>' },
+                        { ar: '<span class="math-display">3e</span>', en: '<span class="math-display">3e</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 't(0) = 3·e⁰ = 3·1 = 3', en: 't(0) = 3·e⁰ = 3·1 = 3' }
+                },
+                {
+                    q: { ar: '<strong>تمرين 3C:</strong> t(x) = 3eˣ. ما قيمة t(1)؟', en: '<strong>Exercise 3C:</strong> t(x) = 3eˣ. What is t(1)?' },
+                    options: [
+                        { ar: '<span class="math-display">3e ≈ 8.15</span>', en: '<span class="math-display">3e ≈ 8.15</span>' },
+                        { ar: '<span class="math-display">e ≈ 2.718</span>', en: '<span class="math-display">e ≈ 2.718</span>' },
+                        { ar: '<span class="math-display">3</span>', en: '<span class="math-display">3</span>' },
+                        { ar: '<span class="math-display">4</span>', en: '<span class="math-display">4</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 't(1) = 3·e¹ = 3e ≈ 8.15', en: 't(1) = 3·e¹ = 3e ≈ 8.15' }
+                },
+                {
+                    q: { ar: '<strong>تمرين 3C:</strong> t(x) = 3eˣ. ما قيمة t(-1)؟', en: '<strong>Exercise 3C:</strong> t(x) = 3eˣ. What is t(-1)?' },
+                    options: [
+                        { ar: '<span class="math-display">3/e ≈ 1.10</span>', en: '<span class="math-display">3/e ≈ 1.10</span>' },
+                        { ar: '<span class="math-display">-3</span>', en: '<span class="math-display">-3</span>' },
+                        { ar: '<span class="math-display">1/3</span>', en: '<span class="math-display">1/3</span>' },
+                        { ar: '<span class="math-display">-3e</span>', en: '<span class="math-display">-3e</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 't(-1) = 3·e^(-1) = 3/e ≈ 1.10', en: 't(-1) = 3·e^(-1) = 3/e ≈ 1.10' }
+                },
+                {
+                    q: { ar: '<strong>تمرين 3C:</strong> ما التحويل الذي تم تطبيقه على eˣ للحصول على 3eˣ؟', en: '<strong>Exercise 3C:</strong> What transformation was applied to eˣ to get 3eˣ?' },
+                    options: [
+                        { ar: 'تمدد رأسي بمعامل 3', en: 'Vertical stretch by factor 3' },
+                        { ar: 'انكماش رأسي بمعامل 1/3', en: 'Vertical compression by factor 1/3' },
+                        { ar: 'إزاحة رأسية بمقدار 3', en: 'Vertical shift by 3' },
+                        { ar: 'انعكاس حول المحور x', en: 'Reflection across x-axis' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'الضرب في 3 يمثل تمدداً رأسياً بمعامل 3', en: 'Multiplying by 3 represents a vertical stretch by factor 3' }
+                },
+                {
+                    q: { ar: '<strong>تمرين 3C:</strong> ما الخط المقارب الأفقي لـ t(x) = 3eˣ؟', en: '<strong>Exercise 3C:</strong> What is the horizontal asymptote of t(x) = 3eˣ?' },
+                    options: [
+                        { ar: '<span class="math-display">y = 0</span>', en: '<span class="math-display">y = 0</span>' },
+                        { ar: '<span class="math-display">y = 3</span>', en: '<span class="math-display">y = 3</span>' },
+                        { ar: '<span class="math-display">y = 1</span>', en: '<span class="math-display">y = 1</span>' },
+                        { ar: 'لا يوجد HA', en: 'No HA' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'HA: y = 0 (التمدد الرأسي لا يغير الخط المقارب الأفقي)', en: 'HA: y = 0 (vertical stretch does not change horizontal asymptote)' }
+                }
+            ]
+        },
+        {
+            id: 'sec3',
+            title: { ar: '🔹 القسم 3: التحويلات والإزاحات (Q11-Q15)', en: '🔹 Section 3: Transformations & Shifts (Q11-Q15)' },
+            questions: [
+                {
+                    q: { ar: '<strong>س11:</strong> f(x) = eˣ + 2. ما الإزاحة الرأسية؟', en: '<strong>Q11:</strong> f(x) = eˣ + 2. What is the vertical shift?' },
+                    svg: svgGraphs.transformations_summary,
+                    options: [
+                        { ar: '2 وحدة لأعلى', en: '2 units up' },
+                        { ar: '2 وحدة لأسفل', en: '2 units down' },
+                        { ar: '2 وحدة لليمين', en: '2 units right' },
+                        { ar: '2 وحدة لليسار', en: '2 units left' }
+                    ],
+                    correct: 0,
+                    answer: { ar: '+2 تعني إزاحة رأسية لأعلى بمقدار 2 وحدة', en: '+2 means vertical shift up by 2 units' }
+                },
+                {
+                    q: { ar: '<strong>س12:</strong> f(x) = e^(x-3). ما الإزاحة الأفقية؟', en: '<strong>Q12:</strong> f(x) = e^(x-3). What is the horizontal shift?' },
+                    options: [
+                        { ar: '3 وحدات لليمين', en: '3 units right' },
+                        { ar: '3 وحدات لليسار', en: '3 units left' },
+                        { ar: '3 وحدات لأعلى', en: '3 units up' },
+                        { ar: '3 وحدات لأسفل', en: '3 units down' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'e^(x-3) تعني إزاحة أفقية لليمين بمقدار 3 وحدات', en: 'e^(x-3) means horizontal shift right by 3 units' }
+                },
+                {
+                    q: { ar: '<strong>س13:</strong> f(x) = -eˣ. ما التحويل؟', en: '<strong>Q13:</strong> f(x) = -eˣ. What is the transformation?' },
+                    options: [
+                        { ar: 'انعكاس حول المحور x', en: 'Reflection across x-axis' },
+                        { ar: 'انعكاس حول المحور y', en: 'Reflection across y-axis' },
+                        { ar: 'إزاحة رأسية بمقدار -1', en: 'Vertical shift by -1' },
+                        { ar: 'تمدد رأسي بمعامل -1', en: 'Vertical stretch by factor -1' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'الإشارة السالبة أمام eˣ تعني انعكاس حول المحور x', en: 'Negative sign in front of eˣ means reflection across x-axis' }
+                },
+                {
+                    q: { ar: '<strong>س14:</strong> f(x) = e^(-x). ما التحويل؟', en: '<strong>Q14:</strong> f(x) = e^(-x). What is the transformation?' },
+                    options: [
+                        { ar: 'انعكاس حول المحور y', en: 'Reflection across y-axis' },
+                        { ar: 'انعكاس حول المحور x', en: 'Reflection across x-axis' },
+                        { ar: 'إزاحة أفقية', en: 'Horizontal shift' },
+                        { ar: 'تمدد رأسي', en: 'Vertical stretch' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'e^(-x) تعني استبدال x بـ -x، وهو انعكاس حول المحور y', en: 'e^(-x) means replacing x with -x, which is reflection across y-axis' }
+                },
+                {
+                    q: { ar: '<strong>س15:</strong> f(x) = 2eˣ - 3. ما التحويلات المطبقة على eˣ؟', en: '<strong>Q15:</strong> f(x) = 2eˣ - 3. What transformations are applied to eˣ?' },
+                    options: [
+                        { ar: 'تمدد رأسي بمعامل 2، ثم إزاحة رأسية 3 وحدات لأسفل', en: 'Vertical stretch by 2, then vertical shift 3 units down' },
+                        { ar: 'تمدد أفقي بمعامل 2، ثم إزاحة رأسية 3 وحدات لأسفل', en: 'Horizontal stretch by 2, then vertical shift 3 units down' },
+                        { ar: 'تمدد رأسي بمعامل 2، ثم إزاحة رأسية 3 وحدات لأعلى', en: 'Vertical stretch by 2, then vertical shift 3 units up' },
+                        { ar: 'انعكاس ثم إزاحة', en: 'Reflection then shift' }
+                    ],
+                    correct: 0,
+                    answer: { ar: '2eˣ: تمدد رأسي بمعامل 2، ثم -3: إزاحة رأسية 3 وحدات لأسفل', en: '2eˣ: vertical stretch by 2, then -3: vertical shift 3 units down' }
+                }
+            ]
+        },
+        {
+            id: 'sec4',
+            title: { ar: '🔹 القسم 4: خصائص الدوال الأسية (Q16-Q20)', en: '🔹 Section 4: Properties of Exponential Functions (Q16-Q20)' },
+            questions: [
+                {
+                    q: { ar: '<strong>س16:</strong> ما مجال الدالة f(x) = eˣ؟', en: '<strong>Q16:</strong> What is the domain of f(x) = eˣ?' },
+                    svg: svgGraphs.basic_ex,
+                    options: [
+                        { ar: '<span class="math-display">(-∞, +∞)</span> - جميع الأعداد الحقيقية', en: '<span class="math-display">(-∞, +∞)</span> - all real numbers' },
+                        { ar: '<span class="math-display">[0, +∞)</span>', en: '<span class="math-display">[0, +∞)</span>' },
+                        { ar: '<span class="math-display">(0, +∞)</span>', en: '<span class="math-display">(0, +∞)</span>' },
+                        { ar: '<span class="math-display">[-1, 1]</span>', en: '<span class="math-display">[-1, 1]</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'مجال eˣ هو جميع الأعداد الحقيقية (-∞, +∞)', en: 'Domain of eˣ is all real numbers (-∞, +∞)' }
+                },
+                {
+                    q: { ar: '<strong>س17:</strong> ما مدى الدالة f(x) = eˣ؟', en: '<strong>Q17:</strong> What is the range of f(x) = eˣ?' },
+                    options: [
+                        { ar: '<span class="math-display">(0, +∞)</span>', en: '<span class="math-display">(0, +∞)</span>' },
+                        { ar: '<span class="math-display">(-∞, +∞)</span>', en: '<span class="math-display">(-∞, +∞)</span>' },
+                        { ar: '<span class="math-display">[0, +∞)</span>', en: '<span class="math-display">[0, +∞)</span>' },
+                        { ar: '<span class="math-display">[1, +∞)</span>', en: '<span class="math-display">[1, +∞)</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'مدى eˣ هو (0, +∞) - دائماً موجب ولا يساوي صفراً', en: 'Range of eˣ is (0, +∞) - always positive, never zero' }
+                },
+                {
+                    q: { ar: '<strong>س18:</strong> ما الخط المقارب الأفقي لـ f(x) = eˣ؟', en: '<strong>Q18:</strong> What is the horizontal asymptote of f(x) = eˣ?' },
+                    options: [
+                        { ar: '<span class="math-display">y = 0</span> (المحور x)', en: '<span class="math-display">y = 0</span> (x-axis)' },
+                        { ar: '<span class="math-display">y = 1</span>', en: '<span class="math-display">y = 1</span>' },
+                        { ar: '<span class="math-display">y = e</span>', en: '<span class="math-display">y = e</span>' },
+                        { ar: 'لا يوجد HA', en: 'No HA' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'عندما x → -∞، eˣ → 0. إذن HA: y = 0', en: 'As x → -∞, eˣ → 0. So HA: y = 0' }
+                },
+                {
+                    q: { ar: '<strong>س19:</strong> ما المدى لـ r(x) = eˣ - 5؟', en: '<strong>Q19:</strong> What is the range of r(x) = eˣ - 5?' },
+                    options: [
+                        { ar: '<span class="math-display">(-5, +∞)</span>', en: '<span class="math-display">(-5, +∞)</span>' },
+                        { ar: '<span class="math-display">(0, +∞)</span>', en: '<span class="math-display">(0, +∞)</span>' },
+                        { ar: '<span class="math-display">(-∞, +∞)</span>', en: '<span class="math-display">(-∞, +∞)</span>' },
+                        { ar: '<span class="math-display">[-5, +∞)</span>', en: '<span class="math-display">[-5, +∞)</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'eˣ > 0 دائماً، إذن eˣ - 5 > -5. المدى: (-5, +∞)', en: 'eˣ > 0 always, so eˣ - 5 > -5. Range: (-5, +∞)' }
+                },
+                {
+                    q: { ar: '<strong>س20:</strong> هل الدالة f(x) = eˣ متزايدة أم متناقصة؟', en: '<strong>Q20:</strong> Is f(x) = eˣ increasing or decreasing?' },
+                    options: [
+                        { ar: 'متزايدة دائماً على R', en: 'Always increasing on R' },
+                        { ar: 'متناقصة دائماً على R', en: 'Always decreasing on R' },
+                        { ar: 'متزايدة ثم متناقصة', en: 'Increasing then decreasing' },
+                        { ar: 'ثابتة', en: 'Constant' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'eˣ متزايدة دائماً لأن مشتقتها eˣ > 0 دائماً', en: 'eˣ is always increasing because its derivative eˣ > 0 always' }
+                }
+            ]
+        },
+        {
+            id: 'sec5',
+            title: { ar: '🔹 القسم 5: السلوك الطرفي والمقاربات (Q21-Q25)', en: '🔹 Section 5: End Behavior & Asymptotes (Q21-Q25)' },
+            questions: [
+                {
+                    q: { ar: '<strong>س21:</strong> ما نهاية eˣ عندما x → +∞؟', en: '<strong>Q21:</strong> What is the limit of eˣ as x → +∞?' },
+                    svg: svgGraphs.comparison_graphs,
+                    options: [
+                        { ar: '<span class="math-display">+∞</span>', en: '<span class="math-display">+∞</span>' },
+                        { ar: '<span class="math-display">0</span>', en: '<span class="math-display">0</span>' },
+                        { ar: '<span class="math-display">1</span>', en: '<span class="math-display">1</span>' },
+                        { ar: '<span class="math-display">e</span>', en: '<span class="math-display">e</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'عندما x → +∞، eˣ → +∞ (تنمو بلا حدود)', en: 'As x → +∞, eˣ → +∞ (grows without bound)' }
+                },
+                {
+                    q: { ar: '<strong>س22:</strong> ما نهاية e^(-x) عندما x → +∞؟', en: '<strong>Q22:</strong> What is the limit of e^(-x) as x → +∞?' },
+                    options: [
+                        { ar: '<span class="math-display">0</span>', en: '<span class="math-display">0</span>' },
+                        { ar: '<span class="math-display">+∞</span>', en: '<span class="math-display">+∞</span>' },
+                        { ar: '<span class="math-display">1</span>', en: '<span class="math-display">1</span>' },
+                        { ar: '<span class="math-display">-∞</span>', en: '<span class="math-display">-∞</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'e^(-x) = 1/eˣ. عندما x → +∞، eˣ → +∞، إذن 1/eˣ → 0', en: 'e^(-x) = 1/eˣ. As x → +∞, eˣ → +∞, so 1/eˣ → 0' }
+                },
+                {
+                    q: { ar: '<strong>س23:</strong> f(x) = eˣ + 3. ما الخط المقارب الأفقي؟', en: '<strong>Q23:</strong> f(x) = eˣ + 3. What is the horizontal asymptote?' },
+                    options: [
+                        { ar: '<span class="math-display">y = 3</span>', en: '<span class="math-display">y = 3</span>' },
+                        { ar: '<span class="math-display">y = 0</span>', en: '<span class="math-display">y = 0</span>' },
+                        { ar: '<span class="math-display">y = -3</span>', en: '<span class="math-display">y = -3</span>' },
+                        { ar: 'لا يوجد HA', en: 'No HA' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'عندما x → -∞، eˣ → 0، إذن f(x) → 0 + 3 = 3. HA: y = 3', en: 'As x → -∞, eˣ → 0, so f(x) → 0 + 3 = 3. HA: y = 3' }
+                },
+                {
+                    q: { ar: '<strong>س24:</strong> f(x) = 2eˣ - 1. ما المدى؟', en: '<strong>Q24:</strong> f(x) = 2eˣ - 1. What is the range?' },
+                    options: [
+                        { ar: '<span class="math-display">(-1, +∞)</span>', en: '<span class="math-display">(-1, +∞)</span>' },
+                        { ar: '<span class="math-display">(0, +∞)</span>', en: '<span class="math-display">(0, +∞)</span>' },
+                        { ar: '<span class="math-display">(-∞, +∞)</span>', en: '<span class="math-display">(-∞, +∞)</span>' },
+                        { ar: '<span class="math-display">[-1, +∞)</span>', en: '<span class="math-display">[-1, +∞)</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: '2eˣ > 0 دائماً، إذن 2eˣ - 1 > -1. المدى: (-1, +∞)', en: '2eˣ > 0 always, so 2eˣ - 1 > -1. Range: (-1, +∞)' }
+                },
+                {
+                    q: { ar: '<strong>س25:</strong> f(x) = e^(-x) + 2. ما السلوك عندما x → +∞؟', en: '<strong>Q25:</strong> f(x) = e^(-x) + 2. What is the behavior as x → +∞?' },
+                    options: [
+                        { ar: '<span class="math-display">f(x) → 2</span>', en: '<span class="math-display">f(x) → 2</span>' },
+                        { ar: '<span class="math-display">f(x) → +∞</span>', en: '<span class="math-display">f(x) → +∞</span>' },
+                        { ar: '<span class="math-display">f(x) → 0</span>', en: '<span class="math-display">f(x) → 0</span>' },
+                        { ar: '<span class="math-display">f(x) → -∞</span>', en: '<span class="math-display">f(x) → -∞</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'عندما x → +∞، e^(-x) → 0، إذن f(x) → 0 + 2 = 2', en: 'As x → +∞, e^(-x) → 0, so f(x) → 0 + 2 = 2' }
+                }
+            ]
+        },
+        {
+            id: 'sec6',
+            title: { ar: '🔹 القسم 6: مسائل مركبة وتطبيقات (Q26-Q30)', en: '🔹 Section 6: Mixed Problems & Applications (Q26-Q30)' },
+            questions: [
+                {
+                    q: { ar: '<strong>س26:</strong> أي دالة تمثل انعكاس eˣ حول المحور x؟', en: '<strong>Q26:</strong> Which function represents reflection of eˣ across x-axis?' },
+                    options: [
+                        { ar: '<span class="math-display">f(x) = -eˣ</span>', en: '<span class="math-display">f(x) = -eˣ</span>' },
+                        { ar: '<span class="math-display">f(x) = e^(-x)</span>', en: '<span class="math-display">f(x) = e^(-x)</span>' },
+                        { ar: '<span class="math-display">f(x) = -e^(-x)</span>', en: '<span class="math-display">f(x) = -e^(-x)</span>' },
+                        { ar: '<span class="math-display">f(x) = eˣ - 1</span>', en: '<span class="math-display">f(x) = eˣ - 1</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'الانعكاس حول المحور x يعني ضرب الدالة في -1: f(x) = -eˣ', en: 'Reflection across x-axis means multiplying function by -1: f(x) = -eˣ' }
+                },
+                {
+                    q: { ar: '<strong>س27:</strong> أي دالة تمثل انعكاس eˣ حول المحور y؟', en: '<strong>Q27:</strong> Which function represents reflection of eˣ across y-axis?' },
+                    options: [
+                        { ar: '<span class="math-display">f(x) = e^(-x)</span>', en: '<span class="math-display">f(x) = e^(-x)</span>' },
+                        { ar: '<span class="math-display">f(x) = -eˣ</span>', en: '<span class="math-display">f(x) = -eˣ</span>' },
+                        { ar: '<span class="math-display">f(x) = eˣ + 1</span>', en: '<span class="math-display">f(x) = eˣ + 1</span>' },
+                        { ar: '<span class="math-display">f(x) = e^(x+1)</span>', en: '<span class="math-display">f(x) = e^(x+1)</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'الانعكاس حول المحور y يعني استبدال x بـ -x: f(x) = e^(-x)', en: 'Reflection across y-axis means replacing x with -x: f(x) = e^(-x)' }
+                },
+                {
+                    q: { ar: '<strong>س28:</strong> f(x) = eˣ و g(x) = eˣ + 4. ما العلاقة بينهما؟', en: '<strong>Q28:</strong> f(x) = eˣ and g(x) = eˣ + 4. What is the relationship?' },
+                    options: [
+                        { ar: 'g هي f مزاحة 4 وحدات لأعلى', en: 'g is f shifted 4 units up' },
+                        { ar: 'g هي f مزاحة 4 وحدات لأسفل', en: 'g is f shifted 4 units down' },
+                        { ar: 'g هي f مزاحة 4 وحدات لليمين', en: 'g is f shifted 4 units right' },
+                        { ar: 'g هي f ممددة بمعامل 4', en: 'g is f stretched by factor 4' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'g(x) = f(x) + 4، إذن g هي f مزاحة رأسياً 4 وحدات لأعلى', en: 'g(x) = f(x) + 4, so g is f shifted vertically 4 units up' }
+                },
+                {
+                    q: { ar: '<strong>س29:</strong> أي من الدوال التالية لها HA عند y = -2؟', en: '<strong>Q29:</strong> Which function has HA at y = -2?' },
+                    options: [
+                        { ar: '<span class="math-display">f(x) = eˣ - 2</span>', en: '<span class="math-display">f(x) = eˣ - 2</span>' },
+                        { ar: '<span class="math-display">f(x) = eˣ + 2</span>', en: '<span class="math-display">f(x) = eˣ + 2</span>' },
+                        { ar: '<span class="math-display">f(x) = e^(x-2)</span>', en: '<span class="math-display">f(x) = e^(x-2)</span>' },
+                        { ar: '<span class="math-display">f(x) = 2eˣ</span>', en: '<span class="math-display">f(x) = 2eˣ</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'f(x) = eˣ - 2: عندما x → -∞، eˣ → 0، إذن f(x) → -2', en: 'f(x) = eˣ - 2: as x → -∞, eˣ → 0, so f(x) → -2' }
+                },
+                {
+                    q: { ar: '<strong>س30:</strong> ما قيمة x التي تجعل eˣ = 1؟', en: '<strong>Q30:</strong> What value of x makes eˣ = 1?' },
+                    options: [
+                        { ar: '<span class="math-display">x = 0</span>', en: '<span class="math-display">x = 0</span>' },
+                        { ar: '<span class="math-display">x = 1</span>', en: '<span class="math-display">x = 1</span>' },
+                        { ar: '<span class="math-display">x = e</span>', en: '<span class="math-display">x = e</span>' },
+                        { ar: '<span class="math-display">لا توجد قيمة</span>', en: '<span class="math-display">No value</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'e⁰ = 1، إذن x = 0', en: 'e⁰ = 1, so x = 0' }
+                }
+            ]
+        }
+    ]
+};
+
+function shuffleArray(array) {
+    const arr = [...array];
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(rng() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+}
+
+function prepareShuffledExam() {
+    rng = mulberry32(currentSeed);
+    examData = JSON.parse(JSON.stringify(originalExamData));
+    correctAnswersMap = {};
+    let globalIdx = 0;
+    examData.sections.forEach((section) => {
+        section.questions = shuffleArray(section.questions);
+        section.questions.forEach((q) => {
+            const optionsWithCorrect = q.options.map((opt, idx) => ({ option: opt, isCorrect: idx === q.correct }));
+            const shuffledOptions = shuffleArray(optionsWithCorrect);
+            q.options = shuffledOptions.map(o => o.option);
+            q.correct = shuffledOptions.findIndex(o => o.isCorrect);
+            correctAnswersMap[globalIdx] = String.fromCharCode(97 + q.correct);
+            globalIdx++;
+        });
+    });
+}
+
+function reshuffleExam() {
+    const msg = currentLang === 'ar' ? '🔄 سيتم إنشاء أسئلة جديدة ومسح إجاباتك. هل أنت متأكد؟' : '🔄 New questions will be generated. Are you sure?';
+    if (confirm(msg)) {
+        currentSeed = Date.now(); timeRemaining = TOTAL_TIME; answersVisible = false;
+        prepareShuffledExam(); renderExam(); saveState();
+        alert(currentLang === 'ar' ? '🎲 تم تغيير الأسئلة! حظاً موفقاً! 🍀' : '🎲 Questions changed! Good luck! 🍀');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+}
+
+function setLanguage(lang) {
+    currentLang = lang;
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    document.getElementById('btn-ar').classList.toggle('active', lang === 'ar');
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    document.body.classList.toggle('en-mode', lang === 'en');
+    
+    document.querySelectorAll('[data-ar]').forEach(el => {
+        el.textContent = el.getAttribute('data-' + lang);
+    });
+    
+    document.querySelectorAll('[data-placeholder-ar]').forEach(el => {
+        el.placeholder = el.getAttribute('data-placeholder-' + lang);
+    });
+    
+    renderExam(); saveState(false);
+}
+
+function renderExam() {
+    const container = document.getElementById('exam-content');
+    const labels = { ar: { option: ['أ', 'ب', 'ج', 'د'], answer: '✅ الإجابة:' }, en: { option: ['A', 'B', 'C', 'D'], answer: '✅ Answer:' } };
+    const lbl = labels[currentLang];
+    let html = '';
+    let globalIdx = 0;
+    
+    examData.sections.forEach((section, secIdx) => {
+        const badgeClass = ['module-1', 'module-2', 'module-3', 'module-4', 'module-5', 'module-6'][secIdx];
+        html += '<section class="bg-white p-6 rounded-2xl shadow-lg border-2 border-green-100">';
+        html += '<div class="text-center mb-4"><span class="module-badge ' + badgeClass + '">' + section.title[currentLang] + '</span></div>';
+        html += '<ol class="space-y-4 text-sm">';
+        
+        section.questions.forEach((q) => {
+            html += '<li class="border-r-4 border-green-400 pr-4 py-2" id="q-' + globalIdx + '" style="border-right: 4px solid #16a34a; padding-right: 1rem;">';
+            html += '<strong class="text-green-700">' + (globalIdx + 1) + '.</strong> ' + q.q[currentLang] + '<br>';
+            if (q.svg) html += '<div class="graph-container">' + q.svg + '</div>';
+            
+            q.options.forEach((opt, oIdx) => {
+                html += '<label class="cursor-pointer block mt-2 mr-4 hover:bg-green-50 rounded-lg p-2 transition" style="margin-right: 1rem;">';
+                html += '<input type="radio" name="q' + globalIdx + '" value="' + String.fromCharCode(97 + oIdx) + '" class="mr-2 ml-2">';
+                html += '<span class="arabic-math">' + lbl.option[oIdx] + ') ' + opt[currentLang] + '</span>';
+                html += '</label>';
+            });
+            
+            html += '<div class="answer-box text-green-700 mt-3 font-medium ' + (answersVisible ? '' : 'hidden') + ' bg-green-50 rounded-lg p-3 border border-green-200">';
+            html += lbl.answer + ' ' + lbl.option[q.correct] + ') <span class="arabic-math">' + q.options[q.correct][currentLang] + '</span><br>';
+            html += '<span class="text-sm text-green-700 mt-2 block arabic-math">' + q.answer[currentLang] + '</span>';
+            html += '</div></li>';
+            globalIdx++;
+        });
+        
+        html += '</ol></section>';
+    });
+    
+    container.innerHTML = html;
+}
+
+function startTimer() {
+    updateTimerDisplay();
+    timerInterval = setInterval(() => {
+        timeRemaining--;
+        updateTimerDisplay();
+        if (timeRemaining % 60 === 0) saveState(false);
+        if (timeRemaining <= 600) document.getElementById('timer').classList.add('timer-warning');
+        if (timeRemaining <= 0) {
+            clearInterval(timerInterval);
+            alert(currentLang === 'ar' ? "⏰ انتهى الوقت!" : "⏰ Time's up!");
+            gradeExam();
+        }
+    }, 1000);
+}
+
+function updateTimerDisplay() {
+    const m = Math.floor(timeRemaining / 60);
+    const s = timeRemaining % 60;
+    document.getElementById('timer').textContent = m.toString().padStart(2,'0') + ':' + s.toString().padStart(2,'0');
+}
+
+function toggleAnswers() {
+    answersVisible = !answersVisible;
+    document.querySelectorAll('.answer-box').forEach(el => el.classList.toggle('hidden', !answersVisible));
+    saveState(false);
+}
+
+function gradeExam() {
+    let correctCount = 0;
+    const sectionScores = new Array(TOTAL_SECTIONS).fill(0);
+    
+    for (let i = 0; i < TOTAL_QUESTIONS; i++) {
+        const sel = document.querySelector('input[name="q'+i+'"]:checked');
+        const li = document.getElementById('q-' + i);
+        if (li) {
+            const isCorrect = sel && sel.value === correctAnswersMap[i];
+            if (isCorrect) {
+                correctCount++;
+                li.classList.add('correct');
+                li.classList.remove('incorrect');
+                sectionScores[Math.floor(i / QUESTIONS_PER_SECTION)]++;
+            } else {
+                li.classList.add('incorrect');
+                li.classList.remove('correct');
+            }
+        }
+    }
+    
+    const score = Math.round((correctCount / TOTAL_QUESTIONS) * 100);
+    document.getElementById('res-total').textContent = score + ' / 100';
+    document.getElementById('res-name').textContent = document.getElementById('studentName').value || (currentLang === 'ar' ? 'بطل' : 'Champion');
+    document.getElementById('res-date').textContent = new Date().toLocaleDateString(currentLang === 'ar' ? 'ar-AE' : 'en-US');
+    
+    const pc = document.getElementById('sections-performance');
+    pc.innerHTML = '';
+    examData.sections.forEach((s, idx) => {
+        pc.innerHTML += '<div class="flex justify-between items-center p-3 bg-white rounded-lg"><span class="text-gray-700">' + s.title[currentLang] + '</span><span class="font-bold text-green-700">' + sectionScores[idx] + '/' + QUESTIONS_PER_SECTION + '</span></div>';
+    });
+    
+    const badge = document.getElementById('success-badge');
+    document.getElementById('success-percent').textContent = score + '%';
+    
+    if (currentLang === 'ar') {
+        if (score >= 90) { badge.textContent = '🌟 ممتاز جداً!'; badge.className = 'success-badge grade-excellent'; }
+        else if (score >= 75) { badge.textContent = '👏 ممتاز!'; badge.className = 'success-badge grade-good'; }
+        else if (score >= 50) { badge.textContent = '👍 جيد'; badge.className = 'success-badge grade-pass'; }
+        else { badge.textContent = '💪 حاول مرة أخرى'; badge.className = 'success-badge grade-fail'; }
+    } else {
+        if (score >= 90) { badge.textContent = '🌟 Outstanding!'; badge.className = 'success-badge grade-excellent'; }
+        else if (score >= 75) { badge.textContent = '👏 Excellent!'; badge.className = 'success-badge grade-good'; }
+        else if (score >= 50) { badge.textContent = '👍 Good'; badge.className = 'success-badge grade-pass'; }
+        else { badge.textContent = '💪 Try Again'; badge.className = 'success-badge grade-fail'; }
+    }
+    
+    document.getElementById('results-panel').classList.remove('hidden');
+    document.getElementById('results-panel').scrollIntoView({ behavior: 'smooth' });
+    if (timerInterval) clearInterval(timerInterval);
+}
+
+function sendResultsToEmail() {
+    const btn = document.getElementById('sendEmailBtn');
+    const status = document.getElementById('emailStatus');
+    btn.disabled = true;
+    btn.textContent = currentLang === 'ar' ? '⏳ جاري الإرسال...' : '⏳ Sending...';
+    
+    const name = document.getElementById('studentName').value || 'N/A';
+    const studentClass = document.getElementById('studentClass').value || 'N/A';
+    const date = document.getElementById('examDate').value || new Date().toLocaleDateString();
+    const score = document.getElementById('res-total').textContent;
+    const successRate = document.getElementById('success-percent').textContent;
+    const badge = document.getElementById('success-badge').textContent;
+    
+    let questionsHTML = '<div style="font-family:Arial; direction:rtl;">';
+    questionsHTML += '<h2>📐 ' + (currentLang === 'ar' ? 'نتيجة امتحان الدوال الأسية' : 'Exponential Functions Exam Result') + '</h2>';
+    questionsHTML += '<p><strong>' + (currentLang === 'ar' ? 'الاسم' : 'Name') + ':</strong> ' + name + '</p>';
+    questionsHTML += '<p><strong>' + (currentLang === 'ar' ? 'الشعبة' : 'Class') + ':</strong> ' + studentClass + '</p>';
+    questionsHTML += '<p><strong>' + (currentLang === 'ar' ? 'التاريخ' : 'Date') + ':</strong> ' + date + '</p>';
+    questionsHTML += '<p><strong>' + (currentLang === 'ar' ? 'الدرجة' : 'Score') + ':</strong> ' + score + ' (' + successRate + '%)</p>';
+    questionsHTML += '<p><strong>' + (currentLang === 'ar' ? 'التقدير' : 'Grade') + ':</strong> ' + badge + '</p>';
+    questionsHTML += '<hr><h3>' + (currentLang === 'ar' ? 'تفاصيل الإجابات:' : 'Answer Details:') + '</h3><table style="width:100%; border-collapse:collapse;">';
+    questionsHTML += '<tr style="background:#16a34a; color:white;"><th style="padding:8px; border:1px solid #ddd;">#</th><th style="padding:8px; border:1px solid #ddd;">' + (currentLang === 'ar' ? 'السؤال' : 'Question') + '</th><th style="padding:8px; border:1px solid #ddd;">' + (currentLang === 'ar' ? 'إجابة الطالب' : 'Student Answer') + '</th><th style="padding:8px; border:1px solid #ddd;">' + (currentLang === 'ar' ? 'الصحيحة' : 'Correct') + '</th><th style="padding:8px; border:1px solid #ddd;">' + (currentLang === 'ar' ? 'النتيجة' : 'Result') + '</th></tr>';
+    
+    let globalIdx = 0;
+    examData.sections.forEach((section) => {
+        questionsHTML += '<tr style="background:#dcfce7;"><td colspan="5" style="padding:8px; font-weight:bold; border:1px solid #ddd;">' + section.title.ar + '</td></tr>';
+        section.questions.forEach((q) => {
+            const sel = document.querySelector('input[name="q'+globalIdx+'"]:checked');
+            const sv = sel ? sel.value : null;
+            const cv = correctAnswersMap[globalIdx];
+            const ic = sv === cv;
+            let sat = currentLang === 'ar' ? '❌ لم يجب' : '❌ No answer';
+            let sac = '#dc2626';
+            if (sv) {
+                const si = sv.charCodeAt(0) - 97;
+                sat = q.options[si][currentLang];
+                sac = ic ? '#16a34a' : '#dc2626';
+            }
+            const cat = q.options[q.correct][currentLang];
+            const rb = ic ? '#f0fdf4' : '#fef2f2';
+            questionsHTML += '<tr style="background:' + rb + ';"><td style="padding:8px; border:1px solid #ddd; text-align:center;">' + (globalIdx+1) + '</td><td style="padding:8px; border:1px solid #ddd;">' + q.q.ar + '</td><td style="padding:8px; border:1px solid #ddd; color:' + sac + ';">' + sat + '</td><td style="padding:8px; border:1px solid #ddd; color:#16a34a;">' + cat + '</td><td style="padding:8px; border:1px solid #ddd; text-align:center;">' + (ic?'✅':'❌') + '</td></tr>';
+            globalIdx++;
+        });
+    });
+    questionsHTML += '</table></div>';
+    
+    const templateParams = {
+        to_email: TARGET_EMAIL,
+        student_name: name,
+        student_class: studentClass,
+        exam_date: date,
+        total_score: score,
+        success_rate: successRate,
+        grade: badge,
+        answers_table: questionsHTML
+    };
+    
+    emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams)
+        .then(() => {
+            status.textContent = currentLang === 'ar' ? '✅ تم الإرسال بنجاح!' : '✅ Sent successfully!';
+            status.style.color = '#16a34a';
+            btn.textContent = currentLang === 'ar' ? '✓ تم' : '✓ Sent';
+            alert(currentLang === 'ar' ? 'تم إرسال النتيجة للمعلم بنجاح!' : 'Result sent to teacher successfully!');
+        })
+        .catch((error) => {
+            status.textContent = currentLang === 'ar' ? '❌ فشل الإرسال' : '❌ Failed to send';
+            status.style.color = '#dc2626';
+            btn.disabled = false;
+            btn.textContent = currentLang === 'ar' ? '📧 حاول مرة أخرى' : '📧 Try Again';
+            alert(currentLang === 'ar' ? 'فشل الإرسال: ' + error.text : 'Failed: ' + error.text);
+        });
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    const saved = loadState();
+    if (saved && saved.seed) {
+        currentSeed = saved.seed;
+        currentLang = saved.lang || 'ar';
+        timeRemaining = saved.timeRemaining !== undefined ? saved.timeRemaining : TOTAL_TIME;
+        answersVisible = saved.answersVisible || false;
+    } else {
+        currentSeed = Date.now();
+    }
+    
+    document.getElementById('btn-ar').classList.toggle('active', currentLang === 'ar');
+    document.getElementById('btn-en').classList.toggle('active', currentLang === 'en');
+    document.body.classList.toggle('en-mode', currentLang === 'en');
+    document.documentElement.lang = currentLang;
+    document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+    
+    document.querySelectorAll('[data-ar]').forEach(el => {
+        el.textContent = el.getAttribute('data-' + currentLang);
+    });
+    
+    document.querySelectorAll('[data-placeholder-ar]').forEach(el => {
+        el.placeholder = el.getAttribute('data-placeholder-' + currentLang);
+    });
+    
+    prepareShuffledExam();
+    renderExam();
+    if (saved) {
+        if (saved.studentName) document.getElementById('studentName').value = saved.studentName;
+        if (saved.studentClass) document.getElementById('studentClass').value = saved.studentClass;
+        if (saved.examDate) document.getElementById('examDate').value = saved.examDate;
+        if (saved.answers) restoreAnswers(saved.answers);
+    }
+    setupAnswerListeners();
+    setupInputListeners();
+    startTimer();
+});
+window.addEventListener('beforeunload', () => saveState(false));
+</script>
+</body>
+</html>
